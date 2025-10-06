@@ -13,9 +13,8 @@ def reverse_string(string):
         string(name) 
     Returns:
         str: revered name 
-    '''                                                                                            #REVERSE A STRING
-    return string[::-1]                                                       #FIRST PARAMATER IS STARTING POS, SECOND PARM IS END, THIRD IS DIRECTION
-
+    '''                                                                                           
+    return string[::-1]                                                      
 def count_vowels(name):     
     '''
     counts vowels of the name
@@ -23,14 +22,14 @@ def count_vowels(name):
         name(stirng)
     Returns:
         name: vowels of name 
-    '''                                                                        #COUNTS THE VOWELS
-    vowels = ['A','a','E','e','I','i','O','o','U','u']                        #ALL THE VOWELS UPPER AND LOWER CASE
+    '''                                                                      
+    vowels = ['A','a','E','e','I','i','O','o','U','u']                       
     vc = 0
 
-    for letter in name:                                                       #FOR EVERY LETTER IN THE NAME WITH A VOWEL
+    for letter in name:                                                       
         if letter in vowels:
             vc += 1  
-    return vc                                                                 #RETURN VOWEL COUNT 
+    return vc                                                                
 
 def count_consonant(name):   
     '''
@@ -43,12 +42,12 @@ def count_consonant(name):
     consonants = ['B','b','C','c','D','d','F','f','G','g','h','J','j','K','k','L','l','M','m','N','n','P','p','Q','q','R','S','s','T','t','V','v','W','w','X','x','Y','y','Z','z']  #ALL THE LETTWERS IN THE ALPHABET UPPER AND LOWERCASE EVERYTHING BUT CONSONANTS
     cc = 0
     
-    for letter in name:                                                       #FOR EVERY LETTER IN THE NAME WITH A CONSONANT
-        if letter in consonants:                                              #IF THE FOLLOWING LETTERS IN LIST ARE IN THE NAME 
-            cc+= 1                                                            #CONSONANT COUNT GOES UP 1    
-    return cc                                                                 #RETURN CONSONANT COUNT 
+    for letter in name:                                                     
+        if letter in consonants:                                             
+            cc+= 1                                                          
+    return cc                                                               
 
-def get_names(fullname):                                                      #creates split funciton to find first middle and last name 
+def get_names(fullname):                                                      
     '''
     creates a split function 
     Args:
@@ -56,8 +55,7 @@ def get_names(fullname):                                                      #c
     Returns:
         parts of name
     '''
-    names = []                                                                #names is list of names 
-    name = ''
+    names = []                                                            
 
     for letter in fullname:
         if letter == ' ':
@@ -76,8 +74,8 @@ def first_name(name):
     Returns:
         the first name
     '''  
-    names = get_names(name)                            #FIND THE FIRST NAME
-    return names[0]                                        #RETURN THE OUTPUT
+    names = get_names(name)                            
+    return names[0]                                       
 
 def last_name(name):       
     '''
@@ -87,8 +85,8 @@ def last_name(name):
     Returns:
         the last name
     '''  
-    names = get_names(name)                            #FIND THE FIRST NAME
-    return names[-1]                                        #RETURN THE OUTPUT
+    names = get_names(name)                           
+    return names[-1]                                      
 
 def middle_name(name):  
     '''
@@ -98,7 +96,7 @@ def middle_name(name):
     Returns:
         the middle name
     '''  
-    names = get_names(name)                            #FIND THE FIRST NAME
+    names = get_names(name)                          
     return ' '.join(names[1:-1])
 
 def has_hyphen(name):
@@ -119,11 +117,10 @@ def lower_case(name):
         name
     Returns:
         lowercase letters 
-    '''                                 #define lowercase 
-    nameout = ''
+    '''                               
 
-    for letter in name:                                 #for letter in name
-        if ord(letter) > 96 and ord(letter) < 123:       #check each letter to see if it's lowercase 
+    for letter in name:                                
+        if ord(letter) > 96 and ord(letter) < 123:       
             nameout = chr(ord(letter) - 32)
         nameout += letter
     return nameout
@@ -135,12 +132,11 @@ def upper_case(name):
         name
     Returns:
        uppercase letters 
-    '''                                              #FIND UPPER CASE 
+    '''                                             
     nameout = ''
-    for letter in name:                                 #FOR LETTER IN NAMEn
-        if ord(letter) > 64  and ord(letter) < 91:       #check each letter to see if it's uppercase  
-            nameout = chr(ord(letter) + 32)                      #add letter to output
-        nameout += letter
+    for letter in name:                                 
+        if ord(letter) > 64  and ord(letter) < 91:       
+            nameout = chr(ord(letter) + 32)                     
     return nameout
 
 def gen_random(name):
@@ -227,5 +223,6 @@ main()
 
    
   
+
 
     
