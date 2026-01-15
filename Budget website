@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Header</title>
+<title>Scroll Ease-In Text</title>
+<style>
+
+
+  body {
+    background-color: rgb(255, 247, 247);
+    overflow: hidden; /* lock scroll on top page */
+  }
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Latin Modern Roman', serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 83px;
+    position: relative; top: 235px;
+    color: rgb(162, 78, 78);
+       opacity: 0; /* start invisible */
+    transform: translateY(50px); /* start slightly below */
+    animation: fadeUp 1.0s ease-out forwards; /* trigger animation */
+  }
+
+  /* Animation keyframes */
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+    
+  
+  
+  
+
+  
+  h2 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 30vh;
+    margin: 40px;
+    font-family: 'Latin Modern Roman', serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: 20px;
+    position: relative; top: 195px;
+    color: rgb(162, 78, 78);
+    opacity: 0; /* start invisible */
+    transform: translateY(50px); /* start slightly below */
+    animation: fadeUp 1.0s ease-out forwards; /* trigger animation */
+  }
+
+  /* Animation keyframes */
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+    
+  
+
+  h4, h5, h6 {
+    font-family: 'Latin Modern Roman', serif;
+    font-style: italic;
+    font-weight: 200;
+    color: rgb(162, 78, 78);
+  }
+    .reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
+
+  h4 { font-size: 70px; margin-top: 60vh; padding-left: 40px; }
+  h5 { font-size: 20px; margin-top: 10px; padding-left: 40px; }
+  h6 { font-size: 20px; margin-top: 45px; padding-left: 40px; }
+
+  form {
+    position: absolute;
+    top: 900px;
+    left: 50px;
+    
+  }
+  
+/* --- This creates the "New Page" farther down --- */
+  #chart {
+    margin-top: 100vh; /* Pushes results exactly one full screen height down */
+    padding: 60px 50px;
+    min-height: 100vh;
+  }
+  
+  .bar {
+    background-color: rgb(162, 78, 78);
+    color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    min-width: 300px;
+    font-family: 'Muli', sans-serif;
+  }
+
+#continue {
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Budgeté</h1>
+<h2>A webpage to help you organize your expenses.</h2>
+<h2 id="continue" style="cursor:pointer;">Continue →</h2>
+
+<h4 id="second_page" class="reveal">Organize your expenses</h4>
+<h5 class="reveal">Enter your budget:</h5>
+<h6 class="reveal">Enter the different categories you're organizing your expenses in:</h6>
+<form>
+
+  
+    <!-- Budget input -->
+    <input type="number" id="budget" name="name" placeholder="$0"><br><br><br>
+
+    <!-- Table for categories and weights -->
+    <table id="budgetTable">
+        <tbody id="table-body">
+            <tr>
+                <td><input type="text" name="category[]" class="category" placeholder="Category 1:"></td>
+                <td><input type="number" name="weight[]" class="weights" placeholder="Category weight:"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="category[]" class="category" placeholder="Category 2:"></td>
+                <td><input type="number" name="weight[]" class="weights" placeholder="Category weight:"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <button type="button" onclick="onAddRow()">+ Add Another Row</button>
+    <button type="button" onclick="calculate()">Submit All</button>
+</form>
+
+<!-- Chart container -->
+<div id="chart" style="margin-top: 20px;"></div>
+
+<script>
+function onAddRow() {
+    const tableBody = document.getElementById("table-body");
+    const rowCount = tableBody.rows.length + 1;
+
+    const newRowHtml = `
+        <tr>
+            <td><input type="text" name="category[]" class="category" placeholder="Category ${rowCount}:"></td>
+            <td><input type="number" name="weight[]" class="weights" placeholder="Category weight:"></td>
+        </tr>
+    `;
+    tableBody.insertAdjacentHTML('beforeend', newRowHtml);
+}
+
+
+
+function calculate() {
+  
+    let budget = Number(document.getElementById("budget").value);
+    let categories = document.getElementsByClassName("category");
+    let weights = document.getElementsByClassName("weights");
+    let chart = document.getElementById("chart");
+
+    chart.innerHTML = ""; // clear old chart
+    let total = 0 
+    for (let i = 0; i < weights.length; i++) {
+        total += Number(weights[i].value) || 0;
+    }
+
+    for (let i = 0; i < weights.length; i++) {
+        let name = categories[i].value || `Category ${i+1}`;
+        let percent = Number(weights[i].value) || 0;
+        let amount = budget * (percent / total);
+
+        // Chart bar
+        let bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.width = percent + "%";
+        bar.textContent = `${name} — $${amount.toFixed(2)}`;
+
+        chart.appendChild(bar);
+    }
+    
+}
+
+
+
+</script>
+
+<!-- Elfsight AI Chatbot -->
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-d8eae493-36cf-4a71-826d-201126b2f5cb" data-elfsight-app-lazy></div>
+
+<script>
+  document.getElementById("continue").addEventListener("click", () => {
+    // unlock scrolling
+    document.body.style.overflowY = "auto";
+
+    // fade in the second page elements
+    const reveals = document.querySelectorAll("#second_page, #second_page ~ .reveal");
+    reveals.forEach(el => el.classList.add("active"));
+
+    // smooth scroll to second page
+    document.getElementById("second_page").scrollIntoView({ behavior: "smooth" });
+});
+
+
+
+
+
+
+  
+</script>
+
+</body>
+</html>
