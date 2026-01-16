@@ -24,7 +24,7 @@
     font-size: 83px;
     position: relative; top: 235px;
     color: rgb(162, 78, 78);
-       opacity: 0; /* start invisible */
+    opacity: 0; /* start invisible */
     transform: translateY(50px); /* start slightly below */
     animation: fadeUp 3.0s ease-out forwards; /* trigger animation */
   }
@@ -40,11 +40,6 @@
       transform: translateY(0);
     }
   }
-    
-  
-  
-  
-
   
   h2 {
     display: flex;
@@ -77,46 +72,39 @@
     }
   }
   
-    
-  
-
   h4, h5, h6 {
     font-family: 'Latin Modern Roman', serif;
     font-style: italic;
     font-weight: 200;
     color: rgb(162, 78, 78);
-  }
-    .reveal {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease-out, transform 1s ease-out;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-  
+    margin-bottom:50px;
+  }  
 
   h4 { font-size: 70px; margin-top: 60vh; padding-left: 40px; }
-  h5 { font-size: 20px; margin-top: 10px; padding-left: 40px; }
-  h6 { font-size: 20px; margin-top: 45px; padding-left: 40px; }
+  h5 { font-size: 20px; margin-top: 10px; padding-left: 40px; margin-bottom: 50px; } 
+  h6 { font-size: 20px; margin-top: 45px; padding-left: 40px; margin-bottom: 10px; }
 
   form {
-    position: absolute;
-    top: 900px;
+    position: relative;
     left: 50px;
-    
   }
-  
-/* --- This creates the "New Page" farther down --- */
+
   #chart {
-    margin-top: 900vh; /* Pushes results exactly one full screen height down */
+    margin-top: 900vh;
     padding: 60px 50px;
     min-height: 100vh;
   }
   
-  .bar {
+.chart-text{
+  padding: 0 0 0 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.enter {
+  margin-bottom: 1em;
+  line-height: .25;
+}
+.bar {
     background-color: rgb(162, 78, 78);
     color: white;
     padding: 15px;
@@ -140,16 +128,17 @@
 <h2>A webpage to help you organize your expenses.</h2>
 <h2 id="continue" style="cursor:pointer;">Continue →</h2>
 
-<h4 id="second_page" class="reveal">Organize your expenses</h4>
-<h5 class="reveal">Enter your budget:</h5>
-<h6 class="reveal">Enter the different categories you're organizing your expenses in:</h6>
+<h4 id="second_page">Organize your expenses</h4>
+
+
 <form>
 
   
-    <!-- Budget input -->
-    <input type="number" id="budget" name="name" placeholder="$0"><br><br><br>
+     <h5 class="chart-text">Enter your budget:</h5>
+    <input type="number" id="budget" name="name" placeholder="$0">
 
-    <!-- Table for categories and weights -->
+
+    <h6 class="chart-text" class="">Enter the different categories you're organizing your expenses in:</h6>
     <table id="budgetTable">
         <tbody id="table-body">
             <tr>
@@ -168,7 +157,6 @@
     <button type="button" onclick="calculate()">Submit All</button>
 </form>
 
-<!-- Chart container -->
 <div id="chart" style="margin-top: 20px;"></div>
 
 <script>
@@ -205,7 +193,6 @@ function calculate() {
         let percent = Number(weights[i].value) || 0;
         let amount = budget * (percent / total);
 
-        // Chart bar
         let bar = document.createElement("div");
         bar.className = "bar";
         bar.style.width = percent + "%";
@@ -220,20 +207,12 @@ function calculate() {
 
 </script>
 
-<!-- Elfsight AI Chatbot -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
 <div class="elfsight-app-d8eae493-36cf-4a71-826d-201126b2f5cb" data-elfsight-app-lazy></div>
 
 <script>
   document.getElementById("continue").addEventListener("click", () => {
-    // unlock scrolling
     document.body.style.overflowY = "auto";
-
-    // fade in the second page elements
-    const reveals = document.querySelectorAll("#second_page, #second_page ~ .reveal");
-    reveals.forEach(el => el.classList.add("active"));
-
-    // smooth scroll to second page
     document.getElementById("second_page").scrollIntoView({ behavior: "smooth" });
 });
 
